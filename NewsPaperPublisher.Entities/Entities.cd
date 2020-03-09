@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="NewsPaperPublisher.Entities.Advertisement">
+    <Position X="6.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Advertisement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NewsPaperPublisher.Entities.News">
+    <Position X="3" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAEAAAAAAAAAAAAAAAAABAAAAAACAA=</HashCode>
+      <FileName>News.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NewsPaperPublisher.Entities.NewsPaper">
+    <Position X="4.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAQAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>NewsPaper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NewsPaperPublisher.Entities.Page">
+    <Position X="4.5" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAIAAAA=</HashCode>
+      <FileName>Page.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
