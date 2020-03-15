@@ -1,4 +1,5 @@
-﻿using NewsPaperPublisher.BusinessManager.NewsSource;
+﻿using NewsPaperPublisher.BusinessManager.AdvertisementSource;
+using NewsPaperPublisher.BusinessManager.NewsSource;
 using NewsPaperPublisher.Entities;
 using NewsPaperPublisher.SampleRepos;
 using System;
@@ -15,66 +16,101 @@ namespace NewsPaperPublisher.BusinessManager
         //e.g. In unit tests, we could inject a faked/mocked datasource.
         INewsSource NewsSource { get; set; }
 
+        IAdvertisementSource AdvertisementSource { get; set; }
+
         List<News> NewsItems = new List<News>();
 
         string subscriberId { get; set; }
 
         const int maxPageLimit = 8;
-        public MyNewsAgency(INewsSource newsSources)
+        const int maxNewsItemsOnPage = 6;
+        public MyNewsAgency(INewsSource newsSources, IAdvertisementSource advertisementSource)
         {
-            this.NewsSource = newsSources;
+            NewsSource = newsSources;
+            AdvertisementSource = advertisementSource;
             subscriberId = NewsSource.Register(this);
         }
 
         public NewsPaper CompileNewsPaper()
         {
             //Step 1. Fetch all the news from the news source.(This demos the pull mode of the publis-subscribe/observable pattern)
-            var newsItems = NewsSource.FetchNews(subscriberId).OrderBy(n => n.Priority);
-            NewsItems.AddRange(newsItems);
+            var newsItems = NewsSource.FetchNews(subscriberId);
+            if (newsItems == null || newsItems.Count() <= 0)
+            {
+                throw new Exception("No news items returned from the news source");
+            }
+            NewsItems.AddRange(newsItems.OrderBy(n => n.Priority));
             //Step 1.1 Fetch all the ads
-            var adds = AdvertisementRepository.GetAdds().ToArray();
+            var adds = AdvertisementSource.GetAdds().ToArray();
 
             //Step 2. Start Compiling newspaper for the fetched news and ads
             var newsPaper = new NewsPaper
             {
                 Name = "The News Express",
-                Date = DateTime.Now.Date
+                Date = DateTime.Now.Date,
+                Pages = new List<Page>()
             };
-            Page page = null;
+            Page page = new Page();
+            newsPaper.Pages.Add(page);
             int advertisementEnumerator = 0;
             foreach (var news in NewsItems)
             {
-                if (page == null || (page.NewsArticles.Count + page.Advertisements.Count == maxPageLimit))
+                if (IsPageFull(page))
                 {
-                    page = new Page();
-                    if (newsPaper.Pages == null)
-                        newsPaper.Pages = new List<Page>();
+                    page = new Page();                    
                     newsPaper.Pages.Add(page);
                 }
-                if (page.NewsArticles.Count < 6)
+                if (page.NewsArticles.Count < maxNewsItemsOnPage)
                 {
                     page.NewsArticles.Add(news);
                 }
-                else if(advertisementEnumerator < adds.Count())
+                else //max news items added to page, now we can accomodate advertisements
                 {
-                    page.Advertisements.Add(adds[advertisementEnumerator]);
-                    advertisementEnumerator++;
+                    //Keep adding advertisements to the page till page is full
+                    while (!IsPageFull(page) && advertisementEnumerator < adds.Count())
+                    {
+                        page.Advertisements.Add(adds[advertisementEnumerator]);
+                        advertisementEnumerator++;
+                    }
+                    //Create new page if after adding advertisements, the page is full, else add news to the same page
+                    if (IsPageFull(page))
+                    {
+                        page = new Page();
+                        newsPaper.Pages.Add(page);
+                        page.NewsArticles.Add(news);
+                    }
+                    else
+                    {
+                        page.NewsArticles.Add(news);
+                    }
                 }
             }
             //There are still some adds to be placed on the pages
-            if(advertisementEnumerator < adds.Count())
-            {
-                var lastPage = newsPaper.Pages.LastOrDefault();
-                while(advertisementEnumerator < adds.Count())
+            if (advertisementEnumerator < adds.Count())
+            {                
+                while (advertisementEnumerator < adds.Count())
                 {
-                    if (lastPage.NewsArticles.Count + lastPage.Advertisements.Count < maxPageLimit)
+                    var lastPage = newsPaper.Pages.LastOrDefault();
+                    if (!IsPageFull(lastPage))
                     {
                         lastPage.Advertisements.Add(adds[advertisementEnumerator]);
+                        advertisementEnumerator++;
+                    }
+                    else
+                    {
+                        var newPage = new Page();
+                        newsPaper.Pages.Add(newPage);
+                        newPage.Advertisements.Add(adds[advertisementEnumerator]);
                         advertisementEnumerator++;
                     }
                 }
             }
             return newsPaper;
+        }        
+
+        private bool IsPageFull(Page page)
+        {
+            return page.NewsArticles.Count + page.Advertisements.Count == maxPageLimit;
         }
 
         //This is to demo Push model of the publisher-subscriber/observable pattern.

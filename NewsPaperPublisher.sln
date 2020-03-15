@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28307.960
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsPaperPublisher", "NewsPaperPublisher\NewsPaperPublisher.csproj", "{CBAB5E7D-DA03-4C94-BF54-94A2A93587F8}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsPaperPublisher.BusinessManager", "NewsPaperPublisher.BusinessManager\NewsPaperPublisher.BusinessManager.csproj", "{F6FEC0CC-9826-451C-962C-0C459593D3BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsPaperPublisher.SampleRepos", "NewsPaperPublisher.SampleRepos\NewsPaperPublisher.SampleRepos.csproj", "{C7992068-3123-419C-8390-FF193AAC5355}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsPaperPublisher.BusinessManager.UnitTest", "NewsPaperPublisher.BusinessManager.UnitTest\NewsPaperPublisher.BusinessManager.UnitTest.csproj", "{B06D0F75-EFE5-4AFF-86AC-9108B92D952F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{C7992068-3123-419C-8390-FF193AAC5355}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7992068-3123-419C-8390-FF193AAC5355}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7992068-3123-419C-8390-FF193AAC5355}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B06D0F75-EFE5-4AFF-86AC-9108B92D952F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B06D0F75-EFE5-4AFF-86AC-9108B92D952F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B06D0F75-EFE5-4AFF-86AC-9108B92D952F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B06D0F75-EFE5-4AFF-86AC-9108B92D952F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

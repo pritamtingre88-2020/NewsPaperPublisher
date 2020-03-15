@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdvertisementSource\AdvertisementSource.cs" />
+    <Compile Include="AdvertisementSource\IAdvertisementSource.cs" />
     <Compile Include="MyNewsAgency.cs" />
     <Compile Include="NewsSource\GoogleNewsSource.cs" />
     <Compile Include="NewsSource\INewsSource.cs" />
